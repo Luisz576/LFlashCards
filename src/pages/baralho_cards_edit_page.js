@@ -29,6 +29,7 @@ export default class BaralhoCardsEditPage extends Component{
             this._refresh_cards()
         }, 0)
     }
+
     render(){
         return (
             <View>
@@ -43,6 +44,7 @@ export default class BaralhoCardsEditPage extends Component{
             </View>
         )
     }
+
     render_card_item_list({item, instance}){
         return (
             <CardItemList key={item.id} card={item} deleteClick={(card) => {
@@ -52,10 +54,12 @@ export default class BaralhoCardsEditPage extends Component{
             }}/>
         )
     }
+
     _refresh_cards(){
         this.setState({ cards: [], isLoading: true });
         this.dbCards.getCardsFromBaralho(this.baralho.id).then(cards => { this.setState({ cards: cards, isLoading: false }); })
     }
+
     _render_page(){
         return (
             <>
@@ -71,6 +75,7 @@ export default class BaralhoCardsEditPage extends Component{
                             (<Text style={styles.obs_big}>Não há cartas cadastradas!</Text>)
                     }
                 </ScrollView>
+
                 {/* MODAL DELETAR */}
                 <Modal
                     transparent={true}
@@ -105,6 +110,7 @@ export default class BaralhoCardsEditPage extends Component{
                         </View>
                     </View>
                 </Modal>
+                
                 {/* MODAL EDITAR */}
                 <Modal
                     transparent={true}

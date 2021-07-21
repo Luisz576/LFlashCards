@@ -11,6 +11,7 @@ import Card from '../models/Card';
 import Spinner from 'react-native-loading-spinner-overlay'
 import spinner_styles from '../styles/spinner_styles'
 import FocusScreenEvent from '../components/events/FocusScreenEvent'
+import * as NotificationsManager from '../services/notifications_manager'
 
 export default class BaralhoViewPage extends Component{
     constructor(props){
@@ -28,8 +29,13 @@ export default class BaralhoViewPage extends Component{
             new_card_verso: '',
             modal_remove_baralho_visible: false,
             modal_praticar_visible: false,
+            token: null,
         }
+        NotificationsManager.registerForPushNotificationsAsync().then(token => {
+            this.setState({ token: token })
+        })
     }
+
     render(){
         return (
             <View>
@@ -57,6 +63,7 @@ export default class BaralhoViewPage extends Component{
             </View>
         )
     }
+
     _renderBaralhoView(){
         return (
             <>
@@ -76,6 +83,7 @@ export default class BaralhoViewPage extends Component{
                 <TouchableOpacity style={styles.item_baralho_base} onPress={() => {this.setState({modal_remove_baralho_visible: true})}}>
                     <Text style={styles.text_underline_decoration_blue}>Deletar baralho</Text>
                 </TouchableOpacity>
+                
                 {/* MODALS */}
                 {/* MODAL ADD */}
                 <Modal
@@ -101,8 +109,14 @@ export default class BaralhoViewPage extends Component{
                                                 this.dbCards.novoCard(new_card).then(result => {
                                                     if(!result)
                                                         alert("Erro ao criar o card!")
-                                                    else
+                                                    else{
                                                         this._refresh()
+                                                        if(this.state.token)
+                                                            NotificationsManager.sendPushNotification(this.state.token, {
+                                                                title: "Nova carta criada!",
+                                                                body: "Parabéns pela sua nova carta!!!"
+                                                            })
+                                                    }
                                                 })
                                                 this.setState({modal_add_card_visible: false, new_card_frente: '', new_card_verso: ''})
                                             }else
@@ -115,6 +129,7 @@ export default class BaralhoViewPage extends Component{
                         </View>
                     </View>
                 </Modal>
+
                 {/* MODAL REMOVE */}
                 <Modal
                     transparent={true}
@@ -142,6 +157,7 @@ export default class BaralhoViewPage extends Component{
                         </View>
                     </View>
                 </Modal>
+
                 {/* MODAL PLAY */}
                 <Modal
                     transparent={true}

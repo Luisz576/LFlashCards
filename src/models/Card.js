@@ -1,5 +1,4 @@
 import meses from '../utils/meses'
-import CardUtils from '../utils/cardUtils'
 import cardUtils from '../utils/cardUtils'
 
 export default class Card{
