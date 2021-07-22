@@ -44,7 +44,7 @@ export default function App() {
 
     return () => {
       NotificationManager.removeNotificationSubscription(subscription)
-      NotificationManager.cancelAllScheduledNotificationsAsync() //Cancela as mensagens assim que fechar o app
+      //NotificationManager.cancelAllScheduledNotificationsAsync() //Cancela as mensagens assim que fechar o app
     }
   }, [])
   
