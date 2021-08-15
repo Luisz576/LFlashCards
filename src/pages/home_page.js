@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, Modal, TextInput } from 'react-native'
+import React, { Component } from 'react'
+import { View, TouchableOpacity, Text, ScrollView, Modal } from 'react-native'
+import { Heading, Input } from 'native-base'
+import BannerAd from '../components/ads/banner_ad'
 import Button from '../components/button'
 import Row from '../components/row'
 import baralhosDBClass from '../services/BaralhosConfigDB'
@@ -8,6 +10,7 @@ import styles_modal from '../styles/cards_modal_styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import spinner_styles from '../styles/spinner_styles'
 import FocusScreenEvent from '../components/events/FocusScreenEvent'
+import Colors from '../styles/Colors'
 
 export default class HomePage extends Component{
     constructor(props){
@@ -25,6 +28,8 @@ export default class HomePage extends Component{
     render(){
         return (
             <ScrollView>
+                {/* AdMob */}
+                <BannerAd/>
                 {/* MY CUSTOM ALERT */}
                 <FocusScreenEvent navigation={this.navigation} callback={()=>this._refresh_list()}/> 
                 {
@@ -38,7 +43,7 @@ export default class HomePage extends Component{
                     : (
                         <>
                             <View horizontal={false} style={styles.bodyPage}>
-                                <Text style={styles.title}>Baralhos:</Text>
+                                <Heading size="md" ml={-1}>Baralhos:</Heading>
                                 {
                                     this.state.baralhos.map(baralho => {
                                         return this.renderBaralho({item: baralho, navigation: this.navigation})
@@ -54,7 +59,17 @@ export default class HomePage extends Component{
                                     <View style={styles_modal.modal}>
                                         <Text style={styles.subtitle}>Novo baralho</Text>
                                         <View style={{height: 10}}></View>
-                                        <TextInput style={styles.input} maxLength={30} placeholder='Nome do baralho' onChangeText={text => this.setState({new_baralho: text})}/>
+                                        <Input
+                                            w="100%"
+                                            mx={30}
+                                            size="lg"
+                                            _light={{
+                                                backgroundColor: Colors.white,
+                                                margin: 0
+                                            }}
+                                            placeholder="Nome do baralho"
+                                            onChange={text => this.setState({new_baralho: text})}
+                                        />
                                         <View style={{alignItems: 'flex-end', marginTop: 10}}>
                                             <Row>
                                                 <Button text="Cancelar" onPress={()=>{this.setState({modal_add_visible: false, new_baralho: ''})}}/>
@@ -99,7 +114,7 @@ export default class HomePage extends Component{
         this.db.getBaralhos().then(baralhos => {
             this.setState({baralhos: [], isLoading: true});
             this.setState({baralhos: baralhos, isLoading: false})
-        }).catch(error => {
+        }).catch(_err => {
             console.log("Erro ao carregar!")
             alert("Não foi possível carregar os baralhos!\n:(")
         })

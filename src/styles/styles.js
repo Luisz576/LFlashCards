@@ -57,11 +57,14 @@ export default StyleSheet.create({
     obs_big_no_bold: {
         fontSize: Resolution.isBig() ? 26 : 14,
     },
-    blue_button: {
-        backgroundColor: Colors.option_primary_color,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: Resolution.isBig() ? 20 : 15,
-        paddingVertical: Resolution.isBig() ? 15 : 12,
+    // blue_button: {
+    //     backgroundColor: Colors.option_primary_color,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     paddingHorizontal: Resolution.isBig() ? 20 : 15,
+    //     paddingVertical: Resolution.isBig() ? 15 : 12,
+    // },
+    height_banner_size: {
+        height: 50,
     }
 })

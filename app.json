@@ -17,17 +17,28 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~1458002511"
+      }
     },
     "android": {
       "package": "com.luisz.expo.reactnative.lflashcards",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3940256099942544~3347511713"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    }
+  },
+  "LFlashCards": {
+    "admob": {
+      "ad_unit_id": "ca-app-pub-3940256099942544/6300978111"
     }
   }
 }

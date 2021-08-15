@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Modal, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Modal, TouchableOpacity } from 'react-native'
+import { Heading, Input } from 'native-base'
+import BannerAd from '../components/ads/banner_ad'
 import Button from '../components/button'
 import Row from '../components/row'
 import cardsDBClass from '../services/CardsDB'
@@ -12,6 +14,7 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import spinner_styles from '../styles/spinner_styles'
 import FocusScreenEvent from '../components/events/FocusScreenEvent'
 import * as NotificationsManager from '../services/notifications_manager'
+import Colors from '../styles/Colors'
 
 export default class BaralhoViewPage extends Component{
     constructor(props){
@@ -47,6 +50,9 @@ export default class BaralhoViewPage extends Component{
                         this._refresh()
                     })
                 }}/>
+                {/* AdMob */}
+                <BannerAd/>
+                {/* Page */}
                 <View horizontal={false} style={styles.bodyPage}>
                     {
                         !this.state.isLoading ?
@@ -67,7 +73,7 @@ export default class BaralhoViewPage extends Component{
     _renderBaralhoView(){
         return (
             <>
-                <Text style={styles.title}>{this.state.baralho.nome}</Text>
+                <Heading size="md" ml={-1}>{this.state.baralho.nome}</Heading>
                 <Text style={styles.obs}>{this.state.cards.length} carta(s) cadastrada(s)!</Text>
                 <TouchableOpacity style={styles.item_baralho_base} onPress={() => {this.setState({modal_praticar_visible: true})}}>
                     <Text style={styles.text_underline_decoration_blue}>Praticar</Text>
@@ -94,9 +100,29 @@ export default class BaralhoViewPage extends Component{
                         <View style={styles_modal.modal}>
                             <Text style={styles.subtitle}>Nova carta</Text>
                             <View style={{height: 10}}></View>
-                            <TextInput style={styles.input} placeholder="Frente" onChangeText={text => this.setState({new_card_frente: text})}/>
+                            <Input
+                                w="100%"
+                                mx={30}
+                                size="lg"
+                                _light={{
+                                    backgroundColor: Colors.white,
+                                    margin: 0
+                                }}
+                                placeholder="Frente"
+                                onChange={text => this.setState({new_card_frente: text})}
+                            />
                             <View style={{height: 10}}></View>
-                            <TextInput style={styles.input} placeholder="Verso" onChangeText={text => this.setState({new_card_verso: text})}/>
+                            <Input
+                                w="100%"
+                                mx={30}
+                                size="lg"
+                                _light={{
+                                    backgroundColor: Colors.white,
+                                    margin: 0
+                                }}
+                                placeholder="Verso"
+                                onChange={text => this.setState({new_card_verso: text})}
+                            />
                             <View style={{alignItems: 'flex-end', marginTop: 10}}>
                                 <Row>
                                     <Button text="Cancelar" onPress={()=>{this.setState({modal_add_card_visible: false, new_card_frente: '', new_card_verso: ''})}}/>
@@ -146,9 +172,9 @@ export default class BaralhoViewPage extends Component{
                                     <View style={{width: 10}}/>
                                     <Button text="Confirmar" onPress={()=>{
                                         this.dbBaralho.deletarBaralho(this.state.baralho.id).then(result => {
-                                            if(result){
+                                            if(result)
                                                 this.navigation.pop()
-                                            }else
+                                            else
                                                 alert("Não foi possível deletar este baralho!")
                                         })
                                     }}/>

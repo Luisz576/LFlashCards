@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { NativeBaseProvider } from 'native-base'
 import createAppbarStyle from './src/utils/createAppBar'
 import HomePage from './src/pages/home_page'
 import BaralhoViewPage from './src/pages/baralho_view_page';
@@ -49,13 +50,15 @@ export default function App() {
   }, [])
   
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ transitionSpec: { open: animationTransitionPage, close: animationTransitionPage } }}>
-        <Stack.Screen name="Home" component={HomePage} options={createAppbarStyle('LFlashCards')}/>
-        <Stack.Screen name="BView" component={BaralhoViewPage} options={createAppbarStyle('LFlashCards')}/>
-        <Stack.Screen name="BEdit" component={BaralhoCardsEditPage} options={createAppbarStyle('Editando cartas...')}/>
-        <Stack.Screen name="Praticar" component={PraticarPage} options={createAppbarStyle('Estudando...')}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ transitionSpec: { open: animationTransitionPage, close: animationTransitionPage } }}>
+          <Stack.Screen name="Home" component={HomePage} options={createAppbarStyle('LFlashCards')}/>
+          <Stack.Screen name="BView" component={BaralhoViewPage} options={createAppbarStyle('LFlashCards')}/>
+          <Stack.Screen name="BEdit" component={BaralhoCardsEditPage} options={createAppbarStyle('Editando cartas...')}/>
+          <Stack.Screen name="Praticar" component={PraticarPage} options={createAppbarStyle('Estudando...')}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }

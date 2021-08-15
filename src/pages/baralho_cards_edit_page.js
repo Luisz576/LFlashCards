@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, View, Text, TextInput, ScrollView } from 'react-native'
+import { Modal, View, Text, ScrollView } from 'react-native'
+import { Heading, Input } from 'native-base'
+import BannerAd from '../components/ads/banner_ad'
 import Button from '../components/button'
 import Row from '../components/row'
 import cardsDBClass from '../services/CardsDB'
@@ -8,6 +10,7 @@ import spinner_styles from '../styles/spinner_styles'
 import Spinner from 'react-native-loading-spinner-overlay'
 import styles_modal from '../styles/cards_modal_styles'
 import CardItemList from '../components/card_item_list';
+import Colors from '../styles/Colors';
 
 export default class BaralhoCardsEditPage extends Component{
     constructor(props){
@@ -63,8 +66,12 @@ export default class BaralhoCardsEditPage extends Component{
     _render_page(){
         return (
             <>
+                {/* AdMob */}
+                <BannerAd/>
+
+                {/* Page */}
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.bodyPage}>
-                    <Text style={styles.title}>Cartas do baralho</Text>
+                    <Heading size="md" ml={-1}> Cartas do baralho</Heading>
                     <View style={{height: 10}}/>
                     {
                         this.state.cards.length > 0 ? 
@@ -74,6 +81,7 @@ export default class BaralhoCardsEditPage extends Component{
                         :
                             (<Text style={styles.obs_big}>Não há cartas cadastradas!</Text>)
                     }
+                    <View style={styles.height_banner_size}/>
                 </ScrollView>
 
                 {/* MODAL DELETAR */}
@@ -120,17 +128,37 @@ export default class BaralhoCardsEditPage extends Component{
                         <View style={styles_modal.modal}>
                             <Text style={styles.subtitle}>Editar carta</Text>
                             <View style={{height: 10}}></View>
-                            <TextInput style={styles.input} value={this.state.edit_frente} placeholder="Frente" onChangeText={text => {
-                                this.setState({
-                                    edit_frente: text
-                                })
-                            }}/>
+                            <Input
+                                w="100%"
+                                mx={30}
+                                size="lg"
+                                _light={{
+                                    backgroundColor: Colors.white,
+                                    margin: 0
+                                }}
+                                placeholder="Frente"
+                                onChange={text => {
+                                    this.setState({
+                                        edit_frente: text
+                                    })
+                                }}
+                            />
                             <View style={{height: 10}}></View>
-                            <TextInput style={styles.input} value={this.state.edit_verso} placeholder="Verso" onChangeText={text => {
-                                this.setState({
-                                    edit_verso: text
-                                })
-                            }}/>
+                            <Input
+                                w="100%"
+                                mx={30}
+                                size="lg"
+                                _light={{
+                                    backgroundColor: Colors.white,
+                                    margin: 0
+                                }}
+                                placeholder="Verso"
+                                onChange={text => {
+                                    this.setState({
+                                        edit_verso: text
+                                    })
+                                }}
+                            />
                             <View style={{alignItems: 'flex-end', marginTop: 10}}>
                                 <Row>
                                     <Button text="Cancelar" onPress={()=>{this.setState({modal_edit_card_visible: false, card_in_action: null})}}/>
